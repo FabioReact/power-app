@@ -1,20 +1,14 @@
-import { useState } from "react";
+// import { LearnUseEffect } from "./learning/LearnUseEffect";
+import LearnUseCounter from "./learning/LearnUseCounter";
+import HeroesList from "./pages/HeroesList";
 
 const App = () => {
-  const [selectedLetter, setSelectedLetter] = useState('');
+  // https://github.com/FabioReact/power-app
 
   return (
     <>
-      <h1>React App</h1>
-      <h2>List of heroes</h2>
-      <ul>
-        <li onClick={() => setSelectedLetter('A')}>A</li>
-        <li>B</li>
-        <li>C</li>
-        <li>...</li>
-        <li>Z</li>
-      </ul>
-      <p>Vouz avez cliqué sur la lettre: {selectedLetter}</p>
+      {/* <HeroesList /> */}
+      <LearnUseCounter />
     </>
   )
 }
