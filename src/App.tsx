@@ -1,5 +1,4 @@
 // import { LearnUseEffect } from "./learning/LearnUseEffect";
-import LearnUseCounter from "./learning/LearnUseCounter";
 import HeroesList from "./pages/HeroesList";
 
 const App = () => {
@@ -7,8 +6,7 @@ const App = () => {
 
   return (
     <>
-      {/* <HeroesList /> */}
-      <LearnUseCounter />
+      <HeroesList />
     </>
   )
 }
