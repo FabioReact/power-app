@@ -1,5 +1,5 @@
 // import { LearnUseEffect } from "./learning/LearnUseEffect";
-import HeroesList from "./pages/HeroesList";
+import HeroesList from './pages/HeroesList';
 
 const App = () => {
   // https://github.com/FabioReact/power-app
@@ -8,7 +8,7 @@ const App = () => {
     <>
       <HeroesList />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

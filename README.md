@@ -48,3 +48,14 @@ export default tseslint.config({
   },
 })
 ```
+
+Liens:
+https://tanstack.com/query/latest/docs/framework/react/quick-start
+npm i @tanstack/react-query
+npm i -D @tanstack/eslint-plugin-query
+
+React Typescript CheatSheet:
+https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/forms_and_events/
+
+React Hook Form:
+https://react-hook-form.com/

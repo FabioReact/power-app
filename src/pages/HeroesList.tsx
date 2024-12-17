@@ -46,8 +46,8 @@ const HeroesList = () => {
         {!isLoading &&
           !isError &&
           heroes.map((hero) => (
-            <Link to={hero.id.toString()}>
-              <HeroCard key={hero.id} hero={hero} />
+            <Link key={hero.id} to={hero.id.toString()}>
+              <HeroCard hero={hero} />
             </Link>
           ))}
         {isLoading &&
