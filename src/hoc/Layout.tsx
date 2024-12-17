@@ -26,6 +26,9 @@ const Layout = () => {
           <NavLink className={getClassNames} to='/learning/useeffect'>
             UseEffect
           </NavLink>
+          <NavLink className={getClassNames} to='/login'>
+            Login
+          </NavLink>
           <NavLink className={getClassNames} to='/register'>
             Register
           </NavLink>

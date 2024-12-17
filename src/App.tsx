@@ -1,13 +1,21 @@
-// import { LearnUseEffect } from "./learning/LearnUseEffect";
-import HeroesList from './pages/HeroesList';
+import { BrowserRouter } from 'react-router';
+import AppRoutes from './AppRoutes.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import AuthContextProvider from './hoc/AuthContextProvider.tsx';
+
+const queryClient = new QueryClient();
+
+// Reduce Provider "hell": https://dev.to/alfredosalzillo/the-react-context-hell-7p4
 
 const App = () => {
-  // https://github.com/FabioReact/power-app
-
   return (
-    <>
-      <HeroesList />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthContextProvider>
+    </QueryClientProvider>
   );
 };
 
