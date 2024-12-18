@@ -1,37 +1,56 @@
 import { NavLink, Outlet } from 'react-router';
+import { useAuthContext } from '../contexts/auth-context';
+
+enum LinkVisibility {
+  PUBLIC = 'PUBLIC',
+  AUTHENTICATED = 'AUTHENTICATED',
+  NOT_AUTHENTICATED = 'NOT_AUTHENTICATED',
+}
+
+type Link = {
+  path: string;
+  label: string;
+  visibility: LinkVisibility;
+};
 
 const Layout = () => {
+  const { connected } = useAuthContext();
   const getClassNames = ({ isActive }: { isActive: boolean }) => {
     return isActive ? 'text-red-600' : '';
   };
+
+  const links: Link[] = [
+    { path: '/', label: 'Home', visibility: LinkVisibility.PUBLIC },
+    { path: '/battle', label: 'Battle', visibility: LinkVisibility.PUBLIC },
+    { path: '/heroes', label: 'Heroes', visibility: LinkVisibility.PUBLIC },
+    { path: '/search-heroes', label: 'Search', visibility: LinkVisibility.PUBLIC },
+    { path: '/learning/useref', label: 'UseRef', visibility: LinkVisibility.PUBLIC },
+    { path: '/learning/usecounter', label: 'UseCounter', visibility: LinkVisibility.PUBLIC },
+    { path: '/learning/useeffect', label: 'UseEffect', visibility: LinkVisibility.PUBLIC },
+    { path: '/login', label: 'Login', visibility: LinkVisibility.NOT_AUTHENTICATED },
+    { path: '/register', label: 'Register', visibility: LinkVisibility.NOT_AUTHENTICATED },
+    { path: '/profile', label: 'Profile', visibility: LinkVisibility.AUTHENTICATED },
+    { path: '/logout', label: 'Logout', visibility: LinkVisibility.AUTHENTICATED },
+  ];
+
   return (
     <>
       <nav>
         <ul className='flex justify-center gap-8'>
-          <NavLink className={getClassNames} to='/'>
-            Home
-          </NavLink>
-          <NavLink className={getClassNames} to='/battle'>
-            Battle
-          </NavLink>
-          <NavLink className={getClassNames} to='/heroes'>
-            Heroes
-          </NavLink>
-          <NavLink className={getClassNames} to='/learning/useref'>
-            UseRef
-          </NavLink>
-          <NavLink className={getClassNames} to='/learning/usecounter'>
-            UseCounter
-          </NavLink>
-          <NavLink className={getClassNames} to='/learning/useeffect'>
-            UseEffect
-          </NavLink>
-          <NavLink className={getClassNames} to='/login'>
-            Login
-          </NavLink>
-          <NavLink className={getClassNames} to='/register'>
-            Register
-          </NavLink>
+          {links
+            .filter(
+              (link) =>
+                link.visibility === LinkVisibility.PUBLIC ||
+                link.visibility ===
+                  (connected ? LinkVisibility.AUTHENTICATED : LinkVisibility.NOT_AUTHENTICATED),
+            )
+            .map((link) => (
+              <li key={link.path}>
+                <NavLink className={getClassNames} to={link.path}>
+                  {link.label}
+                </NavLink>
+              </li>
+            ))}
         </ul>
       </nav>
       <main className='flex flex-col items-center justify-center min-h-screen'>

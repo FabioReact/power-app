@@ -1,10 +1,16 @@
-import { Hero } from "../types/hero";
+import { useAuthContext } from '../contexts/auth-context';
+import { useFavoritesContext } from '../contexts/favorites-context';
+import { Hero } from '../types/hero';
+import Star from './Star/Star';
 
 type Props = {
   hero: Hero;
 };
 
 const HeroCard = ({ hero }: Props) => {
+  const { favorites, removeFavorite, addFavorite } = useFavoritesContext();
+  const { connected } = useAuthContext();
+  const isFavorite = favorites.includes(hero.id.toString());
   return (
     <div className='max-w-xs rounded overflow-hidden shadow-lg'>
       <div className='h-96 overflow-hidden relative'>
@@ -17,6 +23,13 @@ const HeroCard = ({ hero }: Props) => {
       <div className='px-6 py-2'>
         <p className='font-bold text-xl'>
           {hero.name} <span className='text-gray-600 text-base'>#{hero.id}</span>
+          {connected && (
+            <Star
+              filled={isFavorite}
+              onSelect={() => addFavorite(hero.id.toString())}
+              onUnSelect={() => removeFavorite(hero.id.toString())}
+            />
+          )}
         </p>
         <p className='text-lg mb-2'>{hero.biography['full-name']}</p>
         <p className='text-gray-700'>

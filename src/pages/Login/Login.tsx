@@ -22,8 +22,8 @@ const LoginPage = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: loginUser,
     onError: (err) => console.log(err),
-    onSuccess: ({ user: { email, id } }) => {
-      onLogin(email, id);
+    onSuccess: ({ user: { email, id }, accessToken }) => {
+      onLogin(email, id, accessToken);
       navigate('/');
     },
   });

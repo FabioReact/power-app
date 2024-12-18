@@ -2,6 +2,7 @@ import { BrowserRouter } from 'react-router';
 import AppRoutes from './AppRoutes.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthContextProvider from './hoc/AuthContextProvider.tsx';
+import FavoritesContextProvider from './hoc/FavoritesContextProvider.tsx';
 
 const queryClient = new QueryClient();
 
@@ -11,9 +12,11 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthContextProvider>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
+        <FavoritesContextProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </FavoritesContextProvider>
       </AuthContextProvider>
     </QueryClientProvider>
   );

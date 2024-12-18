@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
 
 type AuthContextType = {
-  accessToken: string;
+  accessToken: string | null;
   connected: boolean;
   email: string | null;
   id: number | null;
-  onLogin: (email: string, id: number) => void;
+  onLogin: (email: string, id: number, accessToken: string) => void;
   onLogout: () => void;
 };
 
