@@ -27,6 +27,7 @@ const Layout = () => {
     { path: '/learning/useref', label: 'UseRef', visibility: LinkVisibility.PUBLIC },
     { path: '/learning/usecounter', label: 'UseCounter', visibility: LinkVisibility.PUBLIC },
     { path: '/learning/useeffect', label: 'UseEffect', visibility: LinkVisibility.PUBLIC },
+    { path: '/learning/optimisations', label: 'Optimisations', visibility: LinkVisibility.PUBLIC },
     { path: '/login', label: 'Login', visibility: LinkVisibility.NOT_AUTHENTICATED },
     { path: '/register', label: 'Register', visibility: LinkVisibility.NOT_AUTHENTICATED },
     { path: '/profile', label: 'Profile', visibility: LinkVisibility.AUTHENTICATED },
@@ -53,7 +54,7 @@ const Layout = () => {
             ))}
         </ul>
       </nav>
-      <main className='flex flex-col items-center justify-center min-h-screen'>
+      <main className=''>
         <Outlet />
       </main>
     </>

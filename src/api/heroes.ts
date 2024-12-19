@@ -11,13 +11,13 @@ export const getHeroById = async (id: string): Promise<Hero> => {
 };
 
 type SearchHeroesParams = {
-  heroName: string;
-  combat: string;
-  intelligence: string;
-  durability: string;
-  power: string;
-  speed: string;
-  strength: string;
+  heroName?: string;
+  combat?: string;
+  intelligence?: string;
+  durability?: string;
+  power?: string;
+  speed?: string;
+  strength?: string;
 };
 
 export const searchHeroes = async ({
@@ -29,7 +29,7 @@ export const searchHeroes = async ({
   speed,
   strength,
 }: SearchHeroesParams): Promise<Hero[] | null> => {
-  const filters: Record<string, string> = {
+  const filters: Record<string, string | undefined> = {
     name_like: heroName,
     'powerstats.intelligence_gte': intelligence,
     'powerstats.combat_gte': combat,
@@ -46,7 +46,7 @@ export const searchHeroes = async ({
   });
   if (Object.keys(filters).length === 0) return null;
 
-  const params = new URLSearchParams(filters);
+  const params = new URLSearchParams(filters as Record<string, string>).toString();
   const response = await fetch(`http://localhost:4000/heroes?${params}`);
   return response.json();
 };
