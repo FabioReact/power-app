@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router';
-import { useAuthContext } from '../contexts/auth-context';
+import { useAppSelector } from '../redux/hooks';
 
 const PrivateRoute = () => {
-  const { connected } = useAuthContext();
+  const connected = useAppSelector((state) => state.auth.connected);
 
   if (!connected) {
     return <Navigate to='/login' state={{ from: '/login' }} />;

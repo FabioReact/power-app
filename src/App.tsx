@@ -3,6 +3,8 @@ import AppRoutes from './AppRoutes.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import AuthContextProvider from './hoc/AuthContextProvider.tsx';
 import FavoritesContextProvider from './hoc/FavoritesContextProvider.tsx';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.ts';
 
 const queryClient = new QueryClient();
 
@@ -11,13 +13,15 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContextProvider>
-        <FavoritesContextProvider>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </FavoritesContextProvider>
-      </AuthContextProvider>
+      <Provider store={store}>
+        <AuthContextProvider>
+          <FavoritesContextProvider>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
+          </FavoritesContextProvider>
+        </AuthContextProvider>
+      </Provider>
     </QueryClientProvider>
   );
 };

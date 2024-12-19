@@ -2,7 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, Navigate, useNavigate } from 'react-router';
 import { loginUser } from '../../api/auth';
-import { useAuthContext } from '../../contexts/auth-context';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { onLogin } from '../../redux/slices/auth';
 
 type Inputs = {
   email: string;
@@ -11,7 +12,8 @@ type Inputs = {
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { connected, onLogin } = useAuthContext();
+  const connected = useAppSelector((state) => state.auth.connected);
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -23,7 +25,7 @@ const LoginPage = () => {
     mutationFn: loginUser,
     onError: (err) => console.log(err),
     onSuccess: ({ user: { email, id }, accessToken }) => {
-      onLogin(email, id, accessToken);
+      dispatch(onLogin({ email, id, accessToken }));
       navigate('/');
     },
   });

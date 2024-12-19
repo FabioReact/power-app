@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import HeroCard from '../components/HeroCard';
 import HeroSkeletonCard from '../components/HeroSkeletonCard';
-import { useGetHeroesByLetter } from '../hooks/useGetHeroesByLetter';
 import { Link } from 'react-router';
+import {
+  useGetHeroesByLetterQuery,
+  useLazyGetHeroesByLetterQuery,
+} from '../redux/services/heroesApi';
 
 const alphabet: string[] = [];
 
@@ -13,7 +16,12 @@ for (let i = 65; i <= 90; i++) {
 const HeroesList = () => {
   const [selectedLetter, setSelectedLetter] = useState('A');
 
-  const { heroes, isLoading, isError, refetch } = useGetHeroesByLetter();
+  const [getHeroes, { data: heroes, isLoading, isError, isSuccess }] =
+    useLazyGetHeroesByLetterQuery();
+
+  useEffect(() => {
+    getHeroes('A');
+  }, []);
 
   useEffect(() => {
     console.log('New selected letter:', selectedLetter);
@@ -24,7 +32,7 @@ const HeroesList = () => {
 
   const onSelectLetter = (l: string) => {
     setSelectedLetter(l);
-    refetch(l);
+    getHeroes(l);
   };
 
   return (
@@ -43,8 +51,7 @@ const HeroesList = () => {
       </ul>
       <div className='flex flex-wrap justify-center gap-4'>
         {isError && <p>Something went wrong</p>}
-        {!isLoading &&
-          !isError &&
+        {isSuccess &&
           heroes.map((hero) => (
             <Link key={hero.id} to={hero.id.toString()}>
               <HeroCard hero={hero} />

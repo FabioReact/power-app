@@ -1,15 +1,16 @@
-import { useAuthContext } from '../contexts/auth-context';
-import { useFavoritesContext } from '../contexts/favorites-context';
 import { Hero } from '../types/hero';
 import Star from './Star/Star';
+import { addFavorite, removeFavorite } from '../redux/slices/favoritesHeroes';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
 
 type Props = {
   hero: Hero;
 };
 
 const HeroCard = ({ hero }: Props) => {
-  const { favorites, removeFavorite, addFavorite } = useFavoritesContext();
-  const { connected } = useAuthContext();
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector((state) => state.heroes.favorites);
+  const connected = useAppSelector((state) => state.auth.connected);
   const isFavorite = favorites.includes(hero.id.toString());
   return (
     <div className='max-w-xs rounded overflow-hidden shadow-lg'>
@@ -26,8 +27,8 @@ const HeroCard = ({ hero }: Props) => {
           {connected && (
             <Star
               filled={isFavorite}
-              onSelect={() => addFavorite(hero.id.toString())}
-              onUnSelect={() => removeFavorite(hero.id.toString())}
+              onSelect={() => dispatch(addFavorite(hero.id.toString()))}
+              onUnSelect={() => dispatch(removeFavorite(hero.id.toString()))}
             />
           )}
         </p>

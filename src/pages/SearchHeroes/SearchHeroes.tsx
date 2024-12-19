@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { searchHeroes } from '../../api/heroes';
 import HeroCard from '../../components/HeroCard';
+import { useLazySearchHeroesQuery } from '../../redux/services/heroesApi';
 
 const schema = z.object({
   heroName: z.string(),
@@ -27,25 +28,27 @@ const stats: (keyof Inputs)[] = [
 ];
 
 const SearchHeroes = () => {
-  const { register, handleSubmit, getValues } = useForm<Inputs>({
+  const { register, handleSubmit } = useForm<Inputs>({
     resolver: zodResolver(schema),
   });
 
-  const {
-    data: heroes,
-    isSuccess,
-    refetch,
-  } = useQuery({
-    queryKey: ['search-heroes'],
-    queryFn: () => searchHeroes(getValues()),
-    enabled: false,
-    staleTime: 0,
-  });
+  // const {
+  //   data: heroes,
+  //   isSuccess,
+  //   refetch,
+  // } = useQuery({
+  //   queryKey: ['search-heroes'],
+  //   queryFn: () => searchHeroes(getValues()),
+  //   enabled: false,
+  //   staleTime: 0,
+  // });
+
+  const [searchHeroes, { data: heroes, isSuccess }] = useLazySearchHeroesQuery();
 
   // console.log(heroes, isSuccess)
 
-  const onSubmitHandler: SubmitHandler<Inputs> = () => {
-    refetch();
+  const onSubmitHandler: SubmitHandler<Inputs> = (data) => {
+    searchHeroes(data);
   };
 
   return (
